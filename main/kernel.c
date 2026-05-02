@@ -2,7 +2,10 @@
 #include "esp_intr_alloc.h"
 #include "xtensa/hal.h"
 #include <string.h>
+#include "xt_instr_macros.h"
 
+#define CCOUNT    234
+#define CCOMPARE0 240
 // cfg
 #define MAX_TASKS 4
 #define TICKS_PER_SLICE 24000 // 1ms at 24MHz
@@ -32,6 +35,7 @@ void task_create(task_t* t, void (*entry)(void), uint32_t* stack, size_t size) {
     t->state = TASK_READY;
     t->sp = init_stack(stack + size / sizeof(uint32_t), entry);
     tasks[task_count++] = t;
+    if (task_count == 1) current_task = tasks[0];
 }
 
 // called from isr

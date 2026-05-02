@@ -28,10 +28,10 @@ _kernel_timer_isr:
     s32i a14, a1, 56
     s32i a15, a1, 60
 
-    rsr a0, EPC1 # save EPC1
+    rsr a0, EPC_1 # save EPC_1
     s32i a0, a1, 64 # interrupted pc
 
-    rsr a0, EPS1 # save EPS1
+    rsr a0, EPS_2 # save EPS_2
     s32i a0, a1, 68 # interrupted ps
 
     # current_task->sp = a1
@@ -49,9 +49,9 @@ _kernel_timer_isr:
 
     # restore context
     l32i    a0,  a1,  68
-    wsr     a0,  EPS1
+    wsr     a0,  EPS_2
     l32i    a0,  a1,  64
-    wsr     a0,  EPC1
+    wsr     a0,  EPC_1
     l32i    a15, a1,  60
     l32i    a14, a1,  56
     l32i    a13, a1,  52
